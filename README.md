@@ -2,9 +2,10 @@
 
 This project aims to predict the sector performance of multiple S&P 500 sectors using historical data collected from Bloomberg.
 
-# Data
+## Data
 
 I have compiled a dataset covering six sectors—HealthCare, Materials, Industrials, ConsumerStaples, ConsumerDiscretionary, and Utilities—from 1997 to 2025. For each sector, I collected 14 key metrics, which include:
+
 	•	Sector Index Price
 	•	Performance (YoY percentage change)
 	•	Dividends
@@ -23,6 +24,7 @@ I have compiled a dataset covering six sectors—HealthCare, Materials, Industri
 These sector-specific metrics are scaled within a 10-year window to account for significant market dynamics over time.
 
 Additionally, I incorporate 13 unscaled macroeconomic indicators, including:
+
 	•	Jobless Claims YoY (%)
 	•	Total Jobless Claims
 	•	GDP (Chained Dollars)
@@ -41,8 +43,6 @@ I also add one additional metric for the current month, which is scaled separate
 
 After combining these metrics, I apply column-wise scaling before performing Principal Component Analysis (PCA) to reduce dimensionality.
 
-Preprocessing & Target Variable
-
 Each input to the model represents a time series of these metrics, covering data from 2 years to 1 year prior to the prediction date.
 	•	Due to the high dimensionality (6 × 14 + 13 = 97 features per time point), I apply PCA to 21 components, preserving 95% of the variance.
 	•	The final input representation consists of the concatenated PCA-reduced time points for a given prediction.
@@ -50,7 +50,7 @@ Each input to the model represents a time series of these metrics, covering data
 
  (Let me know if you are interested in the dataset!)
 
-# Model
+## Model
 
 The neural network is optimized using Adam, with:
 	•	Mean Squared Error (MSE) loss
@@ -64,14 +64,15 @@ I perform a grid search to optimize the model’s hyperparameters:
 	•	Hidden layer size
 	•	Number of hidden layers
 
-# Results
+## Results 
+(see diagrams in the script)
 
 The model’s R² score suggests that it captures some indicators for future price movement.
 	•	Trend prediction: The model effectively predicts price movement tendencies but struggles with exact values.
 	•	Impact of major events: External factors like the pandemic influence validation and test performance.
 	•	Rolling window testing: While I implemented a script for forward testing, I conducted my hyperparameter search on the full dataset, using the most recent data for validation and testing.
 
-# Rolling Window Testing & Future Work
+## Rolling Window Testing & Future Work
 
 My initial forward testing script used a different preprocessing approach (without PCA and time series concatenation). The scripts incrementally trains the model on new data windows while reducing the learning rate over time.
 
