@@ -1,4 +1,4 @@
-## SectorPrognosis
+# SectorPrognosis
 
 This project aims to predict the sector performance of multiple S&P 500 sectors using historical data collected from Bloomberg.
 
