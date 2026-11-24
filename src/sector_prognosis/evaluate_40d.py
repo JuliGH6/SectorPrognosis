@@ -31,7 +31,7 @@ def evaluate_40d_forecast(forecast_dir: str = "forecasts") -> None:
     as_of = meta["as_of_date"]
     tickers = list(LIVE_ETFS.values())
 
-    raw = yf.download(tickers, start=as_of, auto_adjust=True, progress=False)
+    raw = yf.download(tickers, start=as_of, auto_adjust=True, progress=False, threads=False)
     close = raw["Close"] if isinstance(raw.columns, pd.MultiIndex) else raw
     close.index = pd.to_datetime(close.index).tz_localize(None)
     close = close.dropna().sort_index()

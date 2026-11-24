@@ -43,20 +43,20 @@ FRED_SERIES = {
 def fetch_free_live_dataframe(start: str = "2000-01-01") -> pd.DataFrame:
     """Download free daily ETF prices (yfinance) and free US macro series (FRED CSV)."""
     tickers = list(LIVE_ETFS.values()) + list(AUX_ETFS.values())
-    raw = yf.download(tickers, start=start, auto_adjust=True, progress=False)
+    raw = yf.download(tickers, start=start, auto_adjust=True, progress=False, threads=False)
     close = raw["Close"] if isinstance(raw.columns, pd.MultiIndex) else raw
     close = close.dropna().sort_index()
 
-    df = pd.DataFrame({"Date": pd.to_datetime(close.index).tz_localize(None)})
+    df = pd.DataFrame({"Date": pd.to_datetime(close.index).tz_localize(None).astype("datetime64[ns]")})
     for name, sym in {**LIVE_ETFS, **AUX_ETFS}.items():
         df[name] = close[sym].to_numpy(dtype=np.float64)
 
-    # Fetch each FRED series and align strictly causally (forward-fill only, shifted 1 day for safety)
+    # Fetch each FRED series and align strictly causally (forward-fill only)
     for col, fred_id in FRED_SERIES.items():
         url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={fred_id}"
         s = pd.read_csv(url)
         s.columns = ["Date", col]
-        s["Date"] = pd.to_datetime(s["Date"])
+        s["Date"] = pd.to_datetime(s["Date"]).astype("datetime64[ns]")
         s[col] = pd.to_numeric(s[col], errors="coerce")
         s = s.dropna().sort_values("Date")
         # Convert YoY % for CPI, CoreCPI, PPI (matching training scale)
