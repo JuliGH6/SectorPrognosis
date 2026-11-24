@@ -1,0 +1,52 @@
+{
+  "as_of_date": "2026-11-23",
+  "horizon_40d_end_date": "2027-01-18",
+  "tickers": {
+    "HealthCare": "XLV",
+    "Materials": "XLB",
+    "Industrials": "XLI",
+    "ConsumerStaples": "XLP",
+    "ConsumerDiscretionary": "XLY",
+    "Utilities": "XLU"
+  },
+  "starting_prices": {
+    "HealthCare": 179.42,
+    "Materials": 49.9,
+    "Industrials": 162.47,
+    "ConsumerStaples": 90.38,
+    "ConsumerDiscretionary": 116.93,
+    "Utilities": 43.32
+  },
+  "predicted_40d_return_pct": {
+    "HealthCare": 1.54,
+    "Materials": 1.55,
+    "Industrials": 1.69,
+    "ConsumerStaples": 1.22,
+    "ConsumerDiscretionary": 1.72,
+    "Utilities": 1.41
+  },
+  "predicted_1y_return_pct": {
+    "HealthCare": 10.1,
+    "Materials": 10.73,
+    "Industrials": 12.36,
+    "ConsumerStaples": 8.74,
+    "ConsumerDiscretionary": 12.49,
+    "Utilities": 10.54
+  },
+  "active_tilt_z_40d": {
+    "HealthCare": 0.087,
+    "Materials": 0.175,
+    "Industrials": 0.996,
+    "ConsumerStaples": -1.79,
+    "ConsumerDiscretionary": 1.166,
+    "Utilities": -0.635
+  },
+  "active_tilt_z_1y": {
+    "HealthCare": -0.556,
+    "Materials": -0.076,
+    "Industrials": 1.182,
+    "ConsumerStaples": -1.611,
+    "ConsumerDiscretionary": 1.282,
+    "Utilities": -0.22
+  }
+}
