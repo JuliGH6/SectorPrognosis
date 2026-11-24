@@ -1,0 +1,47 @@
+name: Evaluate 40-Day Sector Forecast
+
+on:
+  schedule:
+    # Scheduled 40 days after 2026-11-23 -> January 2 at 14:00 UTC
+    - cron: "0 14 2 1 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-deps -e .
+          pip install numpy pandas scipy yfinance
+
+      - name: Evaluate saved 40-day forecast against actual prices
+        run: |
+          python -m sector_prognosis.evaluate_40d
+
+      - name: Commit evaluation report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add forecasts/evaluation_report_40d.md
+          git diff --cached --quiet || git commit -m "Add 40-day live forecast evaluation report"
+          git push
+
+      - name: Open GitHub Issue with 40-Day Return Findings
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "40-Day Live Sector Forecast Evaluation Report ($(date +%Y-%m-%d))" \
+            --body-file forecasts/evaluation_report_40d.md

@@ -1,0 +1,15 @@
+{
+  "id": "juliworn/sectorprognosis-gpu-sweep",
+  "title": "SectorPrognosis GPU Sweep",
+  "code_file": "train_gpu_sweep.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["juliworn/sector-prognosis-data"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
